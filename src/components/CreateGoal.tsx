@@ -24,8 +24,17 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
   return (
     <div className="max-w-sm mx-auto bg-background min-h-screen">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground">
-        <div className="flex items-center gap-4 mb-4">
+      <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground relative">
+        {/* ABK Logo */}
+        <div className="absolute top-4 right-4">
+          <img 
+            src="/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png" 
+            alt="ABK Logo" 
+            className="h-8 w-auto"
+          />
+        </div>
+        
+        <div className="flex items-center gap-4 mb-4 mr-20">
           <Button 
             variant="ghost" 
             size="icon" 

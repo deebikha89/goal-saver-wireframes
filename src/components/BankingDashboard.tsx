@@ -75,8 +75,17 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
   return (
     <div className="max-w-sm mx-auto bg-background min-h-screen">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground">
-        <div className="flex items-center justify-between mb-6">
+      <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground relative">
+        {/* ABK Logo */}
+        <div className="absolute top-4 right-4">
+          <img 
+            src="/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png" 
+            alt="ABK Logo" 
+            className="h-8 w-auto"
+          />
+        </div>
+        
+        <div className="flex items-center justify-between mb-6 mr-20">
           <div>
             <h1 className="text-lg font-medium">Good Morning</h1>
             <p className="text-sm opacity-90">Ahmed Al-Rashid</p>
