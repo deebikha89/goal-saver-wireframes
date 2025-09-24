@@ -73,18 +73,17 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
   ];
 
   return (
-    <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen">
+    <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative">
+      {/* ABK Logo Background */}
+      <div 
+        className="absolute inset-0 opacity-5 pointer-events-none z-0 bg-no-repeat bg-center bg-contain"
+        style={{
+          backgroundImage: `url('/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png')`
+        }}
+      ></div>
+      
       {/* Header */}
-      <div className="bg-header p-6 text-header-foreground relative shadow-sm">
-        {/* ABK Logo Watermark */}
-        <div className="absolute bottom-4 right-4 opacity-10 pointer-events-none">
-          <img 
-            src="/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png" 
-            alt="ABK Watermark" 
-            className="h-12 w-auto"
-          />
-        </div>
-        
+      <div className="bg-header p-6 text-header-foreground relative shadow-sm z-10">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-lg font-medium text-header-foreground">Good Morning</h1>
@@ -129,7 +128,7 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
       </div>
 
       {/* Account Balance */}
-      <div className="p-4 -mt-4">
+      <div className="p-4 -mt-4 relative z-10">
         <Card className="p-4 bg-gradient-to-br from-background to-muted/20 shadow-lg">
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-semibold text-foreground">Total Balance</h2>
@@ -153,7 +152,7 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
       </div>
 
       {/* Quick Actions */}
-      <div className="px-4 mb-6">
+      <div className="px-4 mb-6 relative z-10">
         <h3 className="font-semibold mb-3 text-foreground">Quick Actions</h3>
         <div className="grid grid-cols-4 gap-3">
           {quickActions.map((action, index) => (
@@ -171,7 +170,7 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
       </div>
 
       {/* Accounts */}
-      <div className="px-4 mb-6">
+      <div className="px-4 mb-6 relative z-10">
         <h3 className="font-semibold mb-3 text-foreground">My Accounts</h3>
         <div className="space-y-3">
           {accounts.map((account) => (
@@ -196,7 +195,7 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
       </div>
 
       {/* Recent Transactions */}
-      <div className="px-4 mb-6">
+      <div className="px-4 mb-6 relative z-10">
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-semibold text-foreground">Recent Transactions</h3>
           <Button variant="ghost" size="sm" className="text-xs">

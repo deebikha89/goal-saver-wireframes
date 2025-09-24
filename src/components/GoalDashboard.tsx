@@ -40,17 +40,16 @@ const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
 
   return (
     <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative">
-      {/* ABK Logo Watermark */}
-      <div className="absolute bottom-4 right-4 opacity-10 pointer-events-none z-10">
-        <img 
-          src="/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png" 
-          alt="ABK Watermark" 
-          className="h-12 w-auto"
-        />
-      </div>
+      {/* ABK Logo Background */}
+      <div 
+        className="absolute inset-0 opacity-5 pointer-events-none z-0 bg-no-repeat bg-center bg-contain"
+        style={{
+          backgroundImage: `url('/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png')`
+        }}
+      ></div>
       
       {/* Header */}
-      <div className="bg-header p-6 text-header-foreground relative shadow-sm">
+      <div className="bg-header p-6 text-header-foreground relative shadow-sm z-10">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-xl font-semibold text-header-foreground">My Goals</h1>
           <Button 
@@ -76,7 +75,7 @@ const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
       </div>
 
       {/* Goals List */}
-      <div className="p-4 space-y-4">
+      <div className="p-4 space-y-4 relative z-10">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-foreground">Active Goals</h2>
           <Button variant="outline" size="sm" onClick={() => onNavigate?.('create')}>
@@ -137,7 +136,7 @@ const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
       </div>
 
       {/* Quick Actions */}
-      <div className="p-4">
+      <div className="p-4 relative z-10">
         <Card className="p-4 bg-muted/30">
           <h3 className="font-medium mb-3 text-foreground">Quick Actions</h3>
           <div className="grid grid-cols-2 gap-2">

@@ -36,17 +36,16 @@ const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
 
   return (
     <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative">
-      {/* ABK Logo Watermark */}
-      <div className="absolute bottom-4 right-4 opacity-10 pointer-events-none z-10">
-        <img 
-          src="/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png" 
-          alt="ABK Watermark" 
-          className="h-12 w-auto"
-        />
-      </div>
+      {/* ABK Logo Background */}
+      <div 
+        className="absolute inset-0 opacity-5 pointer-events-none z-0 bg-no-repeat bg-center bg-contain"
+        style={{
+          backgroundImage: `url('/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png')`
+        }}
+      ></div>
       
       {/* Header */}
-      <div className="bg-header p-6 text-header-foreground relative shadow-sm">
+      <div className="bg-header p-6 text-header-foreground relative shadow-sm z-10">
         <div className="flex items-center justify-between mb-6">
           <Button 
             variant="ghost" 
@@ -81,7 +80,7 @@ const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
       </div>
 
       {/* Progress Section */}
-      <div className="p-4 -mt-8 relative z-10">
+      <div className="p-4 -mt-8 relative z-20">
         <Card className="p-6 shadow-lg">
           <div className="text-center space-y-4">
             <div className="space-y-2">
@@ -112,7 +111,7 @@ const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
       </div>
 
       {/* Quick Actions */}
-      <div className="px-4 mb-6">
+      <div className="px-4 mb-6 relative z-10">
         <div className="grid grid-cols-2 gap-3">
           <Button 
             className="bg-gradient-to-r from-base to-base/90 hover:from-base/90 hover:to-base/80 text-base-foreground"
@@ -129,7 +128,7 @@ const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
       </div>
 
       {/* Monthly Contribution */}
-      <div className="px-4 mb-6">
+      <div className="px-4 mb-6 relative z-10">
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
@@ -147,7 +146,7 @@ const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
       </div>
 
       {/* Recent Activity */}
-      <div className="px-4">
+      <div className="px-4 relative z-10">
         <h3 className="font-semibold mb-3 text-foreground">Recent Activity</h3>
         <div className="space-y-3">
           {recentTransactions.slice(0, 6).map((transaction) => (

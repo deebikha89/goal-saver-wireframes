@@ -59,14 +59,13 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
 
   return (
     <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative">
-      {/* ABK Logo Watermark */}
-      <div className="absolute bottom-4 right-4 opacity-10 pointer-events-none z-10">
-        <img 
-          src="/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png" 
-          alt="ABK Watermark" 
-          className="h-12 w-auto"
-        />
-      </div>
+      {/* ABK Logo Background */}
+      <div 
+        className="absolute inset-0 opacity-5 pointer-events-none z-0 bg-no-repeat bg-center bg-contain"
+        style={{
+          backgroundImage: `url('/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png')`
+        }}
+      ></div>
       
       <MobileNotification
         title="Funds Added Successfully!"
@@ -76,7 +75,7 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
       />
       
       {/* Header */}
-      <div className="bg-header p-6 text-header-foreground relative shadow-sm">
+      <div className="bg-header p-6 text-header-foreground relative shadow-sm z-10">
         <div className="flex items-center gap-4 mb-4">
           <Button 
             variant="ghost" 
@@ -98,7 +97,7 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
         </Card>
       </div>
 
-      <div className="p-4 space-y-6">
+      <div className="p-4 space-y-6 relative z-10">
         {/* Amount Input */}
         <Card className="p-6">
           <div className="space-y-4">
