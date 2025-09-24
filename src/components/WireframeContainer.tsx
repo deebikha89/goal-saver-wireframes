@@ -6,6 +6,7 @@ import GoalDashboard from "./GoalDashboard";
 import CreateGoal from "./CreateGoal";
 import GoalDetails from "./GoalDetails";
 import AddMoney from "./AddMoney";
+import abkLogo from "@/assets/abk-logo.png";
 
 const WireframeContainer = () => {
   const [currentScreen, setCurrentScreen] = useState("dashboard");
@@ -24,11 +25,14 @@ const WireframeContainer = () => {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Smartphone className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold text-foreground">Mobile Banking Wireframes</h1>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <img src={abkLogo} alt="ABK Al Ahli Bank of Kuwait" className="h-12 w-auto" />
+            <div className="flex items-center gap-2">
+              <Smartphone className="h-8 w-8 text-primary" />
+              <h1 className="text-3xl font-bold text-foreground">Mobile Banking Wireframes</h1>
+            </div>
           </div>
-          <p className="text-muted-foreground text-lg">Goal-Based Savings Account Screens</p>
+          <p className="text-muted-foreground text-lg">ABK Goal-Based Savings Account Screens</p>
         </div>
 
         {/* Screen Navigation */}
