@@ -2,8 +2,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, DollarSign, CreditCard, Smartphone, Building2 } from "lucide-react";
+import { ArrowLeft, DollarSign, CreditCard, Smartphone, Building2, CheckCircle } from "lucide-react";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface AddMoneyProps {
   onNavigate?: (screen: string) => void;
@@ -12,6 +13,21 @@ interface AddMoneyProps {
 const AddMoney = ({ onNavigate }: AddMoneyProps) => {
   const [amount, setAmount] = useState("");
   const [selectedMethod, setSelectedMethod] = useState("");
+  const { toast } = useToast();
+
+  const handleAddMoney = () => {
+    // Show success notification
+    toast({
+      title: "Funds Added Successfully!",
+      description: `$${amount} has been added to your Emergency Fund`,
+      duration: 3000,
+    });
+    
+    // Navigate back to details after a short delay
+    setTimeout(() => {
+      onNavigate?.('details');
+    }, 1000);
+  };
 
   const quickAmounts = [25, 50, 100, 200];
   
@@ -165,7 +181,7 @@ const AddMoney = ({ onNavigate }: AddMoneyProps) => {
           className="w-full bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70"
           disabled={!amount || !selectedMethod}
           size="lg"
-          onClick={() => onNavigate?.('details')}
+          onClick={handleAddMoney}
         >
           <DollarSign className="h-4 w-4 mr-2" />
           Add ${amount || "0"} to Goal
