@@ -2,9 +2,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, DollarSign, CreditCard, Smartphone, Building2, CheckCircle } from "lucide-react";
+import { ArrowLeft, DollarSign, CreditCard, Smartphone, Building2 } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+import MobileNotification from "./MobileNotification";
 
 interface AddMoneyProps {
   onNavigate?: (screen: string) => void;
@@ -13,20 +13,16 @@ interface AddMoneyProps {
 const AddMoney = ({ onNavigate }: AddMoneyProps) => {
   const [amount, setAmount] = useState("");
   const [selectedMethod, setSelectedMethod] = useState("");
-  const { toast } = useToast();
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleAddMoney = () => {
-    // Show success notification
-    toast({
-      title: "Funds Added Successfully!",
-      description: `$${amount} has been added to your Emergency Fund`,
-      duration: 3000,
-    });
+    // Show mobile notification
+    setShowNotification(true);
     
     // Navigate back to details after a short delay
     setTimeout(() => {
       onNavigate?.('details');
-    }, 1000);
+    }, 2000);
   };
 
   const quickAmounts = [25, 50, 100, 200];
@@ -56,7 +52,14 @@ const AddMoney = ({ onNavigate }: AddMoneyProps) => {
   ];
 
   return (
-    <div className="max-w-sm mx-auto bg-background min-h-screen">
+    <div className="max-w-sm mx-auto bg-background min-h-screen relative">
+      <MobileNotification
+        title="Funds Added Successfully!"
+        description={`$${amount} has been added to your Emergency Fund`}
+        show={showNotification}
+        onDismiss={() => setShowNotification(false)}
+      />
+      
       {/* Header */}
       <div className="bg-gradient-to-r from-accent to-accent/80 p-6 text-accent-foreground">
         <div className="flex items-center gap-4 mb-4">
