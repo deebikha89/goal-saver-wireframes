@@ -76,11 +76,12 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
     <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative">
       {/* ABK Logo Background Pattern */}
       <div 
-        className="absolute inset-0 opacity-3 pointer-events-none z-0 bg-repeat"
+        className="absolute inset-0 pointer-events-none z-0 bg-repeat"
         style={{
           backgroundImage: `url('/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png')`,
           backgroundSize: '120px 80px',
-          backgroundPosition: '20px 40px'
+          backgroundPosition: '20px 40px',
+          opacity: '0.85'
         }}
       ></div>
       
