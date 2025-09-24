@@ -5,9 +5,17 @@ import { ArrowLeft, Target, TrendingUp, Calendar, Plus, Minus, Settings, Share2 
 
 interface GoalDetailsProps {
   onNavigate?: (screen: string) => void;
+  transactions?: Array<{
+    id: string;
+    date: string;
+    amount: number;
+    type: string;
+    icon: string;
+    paymentMethod?: string;
+  }>;
 }
 
-const GoalDetails = ({ onNavigate }: GoalDetailsProps) => {
+const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
   const goal = {
     name: "Emergency Fund",
     target: 5000,
@@ -19,11 +27,11 @@ const GoalDetails = ({ onNavigate }: GoalDetailsProps) => {
     onTrack: true
   };
 
-  const recentTransactions = [
-    { date: "Sep 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
-    { date: "Sep 10", amount: 50, type: "Manual Add", icon: "➕" },
-    { date: "Aug 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
-    { date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉" },
+  const recentTransactions = transactions || [
+    { id: "1", date: "Sep 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
+    { id: "2", date: "Sep 10", amount: 50, type: "Manual Add", icon: "➕" },
+    { id: "3", date: "Aug 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
+    { id: "4", date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉" },
   ];
 
   return (
@@ -133,14 +141,17 @@ const GoalDetails = ({ onNavigate }: GoalDetailsProps) => {
       <div className="px-4">
         <h3 className="font-semibold mb-3 text-foreground">Recent Activity</h3>
         <div className="space-y-3">
-          {recentTransactions.map((transaction, index) => (
-            <Card key={index} className="p-3">
+          {recentTransactions.slice(0, 6).map((transaction) => (
+            <Card key={transaction.id} className="p-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="text-lg">{transaction.icon}</div>
                   <div>
                     <div className="font-medium text-sm text-foreground">{transaction.type}</div>
-                    <div className="text-xs text-muted-foreground">{transaction.date}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {transaction.date}
+                      {transaction.paymentMethod && ` • ${transaction.paymentMethod}`}
+                    </div>
                   </div>
                 </div>
                 <div className="font-semibold text-success">

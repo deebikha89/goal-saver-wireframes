@@ -8,8 +8,39 @@ import CreateGoal from "./CreateGoal";
 import GoalDetails from "./GoalDetails";
 import AddMoney from "./AddMoney";
 
+interface Transaction {
+  id: string;
+  date: string;
+  amount: number;
+  type: string;
+  icon: string;
+  paymentMethod?: string;
+}
+
 const WireframeContainer = () => {
   const [currentScreen, setCurrentScreen] = useState("banking");
+  const [transactions, setTransactions] = useState<Transaction[]>([
+    { id: "1", date: "Sep 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
+    { id: "2", date: "Sep 10", amount: 50, type: "Manual Add", icon: "➕" },
+    { id: "3", date: "Aug 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
+    { id: "4", date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉" },
+  ]);
+
+  const addTransaction = (amount: number, paymentMethod: string) => {
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    
+    const newTransaction: Transaction = {
+      id: Date.now().toString(),
+      date: formattedDate,
+      amount: parseFloat(amount.toString()),
+      type: "Manual Add",
+      icon: "➕",
+      paymentMethod
+    };
+
+    setTransactions(prev => [newTransaction, ...prev]);
+  };
 
   const screens = [
     { id: "banking", name: "Banking Dashboard", component: BankingDashboard },
@@ -23,6 +54,25 @@ const WireframeContainer = () => {
 
   const handleNavigate = (screen: string) => {
     setCurrentScreen(screen);
+  };
+
+  const renderCurrentComponent = () => {
+    const baseProps = { onNavigate: handleNavigate };
+    
+    switch (currentScreen) {
+      case 'details':
+        return <GoalDetails {...baseProps} transactions={transactions} />;
+      case 'addmoney':
+        return <AddMoney {...baseProps} onAddTransaction={addTransaction} />;
+      case 'banking':
+        return <BankingDashboard {...baseProps} />;
+      case 'goals':
+        return <GoalDashboard {...baseProps} />;
+      case 'create':
+        return <CreateGoal {...baseProps} />;
+      default:
+        return <BankingDashboard {...baseProps} />;
+    }
   };
 
   return (
@@ -59,7 +109,7 @@ const WireframeContainer = () => {
               <div className="bg-foreground rounded-[3rem] p-2 shadow-2xl">
                   <div className="bg-background rounded-[2.5rem] overflow-hidden" style={{ width: '320px', height: '640px' }}>
                     <div className="h-full overflow-auto">
-                      <CurrentComponent onNavigate={handleNavigate} />
+                      {renderCurrentComponent()}
                     </div>
                   </div>
               </div>

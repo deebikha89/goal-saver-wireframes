@@ -8,14 +8,20 @@ import MobileNotification from "./MobileNotification";
 
 interface AddMoneyProps {
   onNavigate?: (screen: string) => void;
+  onAddTransaction?: (amount: number, paymentMethod: string) => void;
 }
 
-const AddMoney = ({ onNavigate }: AddMoneyProps) => {
+const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
   const [amount, setAmount] = useState("");
   const [selectedMethod, setSelectedMethod] = useState("");
   const [showNotification, setShowNotification] = useState(false);
 
   const handleAddMoney = () => {
+    if (amount && selectedMethod && onAddTransaction) {
+      const selectedPaymentMethod = paymentMethods.find(m => m.id === selectedMethod);
+      onAddTransaction(parseFloat(amount), selectedPaymentMethod?.name || "Unknown");
+    }
+    
     // Show mobile notification
     setShowNotification(true);
     
