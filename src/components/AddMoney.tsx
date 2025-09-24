@@ -5,7 +5,11 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft, DollarSign, CreditCard, Smartphone, Building2 } from "lucide-react";
 import { useState } from "react";
 
-const AddMoney = () => {
+interface AddMoneyProps {
+  onNavigate?: (screen: string) => void;
+}
+
+const AddMoney = ({ onNavigate }: AddMoneyProps) => {
   const [amount, setAmount] = useState("");
   const [selectedMethod, setSelectedMethod] = useState("");
 
@@ -40,7 +44,12 @@ const AddMoney = () => {
       {/* Header */}
       <div className="bg-gradient-to-r from-accent to-accent/80 p-6 text-accent-foreground">
         <div className="flex items-center gap-4 mb-4">
-          <Button variant="ghost" size="icon" className="text-accent-foreground hover:bg-accent-foreground/20">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-accent-foreground hover:bg-accent-foreground/20"
+            onClick={() => onNavigate?.('details')}
+          >
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <h1 className="text-xl font-semibold">Add Money</h1>
@@ -156,6 +165,7 @@ const AddMoney = () => {
           className="w-full bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70"
           disabled={!amount || !selectedMethod}
           size="lg"
+          onClick={() => onNavigate?.('details')}
         >
           <DollarSign className="h-4 w-4 mr-2" />
           Add ${amount || "0"} to Goal

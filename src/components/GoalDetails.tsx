@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, Target, TrendingUp, Calendar, Plus, Minus, Settings, Share2 } from "lucide-react";
 
-const GoalDetails = () => {
+interface GoalDetailsProps {
+  onNavigate?: (screen: string) => void;
+}
+
+const GoalDetails = ({ onNavigate }: GoalDetailsProps) => {
   const goal = {
     name: "Emergency Fund",
     target: 5000,
@@ -27,7 +31,12 @@ const GoalDetails = () => {
       {/* Header */}
       <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground">
         <div className="flex items-center justify-between mb-6">
-          <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/20">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-primary-foreground hover:bg-primary-foreground/20"
+            onClick={() => onNavigate?.('goals')}
+          >
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex gap-2">
@@ -88,7 +97,10 @@ const GoalDetails = () => {
       {/* Quick Actions */}
       <div className="px-4 mb-6">
         <div className="grid grid-cols-2 gap-3">
-          <Button className="bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground">
+          <Button 
+            className="bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground"
+            onClick={() => onNavigate?.('addmoney')}
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Money
           </Button>

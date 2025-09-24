@@ -2,22 +2,24 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Smartphone, ArrowRight } from "lucide-react";
+import BankingDashboard from "./BankingDashboard";
 import GoalDashboard from "./GoalDashboard";
 import CreateGoal from "./CreateGoal";
 import GoalDetails from "./GoalDetails";
 import AddMoney from "./AddMoney";
 
 const WireframeContainer = () => {
-  const [currentScreen, setCurrentScreen] = useState("dashboard");
+  const [currentScreen, setCurrentScreen] = useState("banking");
 
   const screens = [
-    { id: "dashboard", name: "Goals Dashboard", component: GoalDashboard },
+    { id: "banking", name: "Banking Dashboard", component: BankingDashboard },
+    { id: "goals", name: "Goals Dashboard", component: GoalDashboard },
     { id: "create", name: "Create Goal", component: CreateGoal },
     { id: "details", name: "Goal Details", component: GoalDetails },
     { id: "addmoney", name: "Add Money", component: AddMoney },
   ];
 
-  const CurrentComponent = screens.find(screen => screen.id === currentScreen)?.component || GoalDashboard;
+  const CurrentComponent = screens.find(screen => screen.id === currentScreen)?.component || BankingDashboard;
 
   const handleNavigate = (screen: string) => {
     setCurrentScreen(screen);
@@ -30,9 +32,9 @@ const WireframeContainer = () => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Smartphone className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold text-foreground">Mobile Banking Wireframes</h1>
+            <h1 className="text-3xl font-bold text-foreground">ABK Mobile Banking</h1>
           </div>
-          <p className="text-muted-foreground text-lg">Goal-Based Savings Account Screens</p>
+          <p className="text-muted-foreground text-lg">Retail Banking & Goal-Based Savings</p>
         </div>
 
         {/* Screen Navigation */}
@@ -75,7 +77,26 @@ const WireframeContainer = () => {
                 {screens.find(s => s.id === currentScreen)?.name}
               </h2>
               
-              {currentScreen === "dashboard" && (
+              {currentScreen === "banking" && (
+                <div className="space-y-4">
+                  <p className="text-muted-foreground">
+                    The main banking dashboard provides a comprehensive overview of accounts, 
+                    balances, and quick access to banking services with a prominent goal-based savings feature.
+                  </p>
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-foreground">Key Features:</h4>
+                    <ul className="space-y-1 text-sm text-muted-foreground list-disc list-inside">
+                      <li>Account balance overview with privacy controls</li>
+                      <li>Quick action buttons for common tasks</li>
+                      <li>Goal-based savings banner with call-to-action</li>
+                      <li>Recent transaction history</li>
+                      <li>Multiple account management</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {currentScreen === "goals" && (
                 <div className="space-y-4">
                   <p className="text-muted-foreground">
                     The main dashboard shows all active savings goals with progress indicators, 

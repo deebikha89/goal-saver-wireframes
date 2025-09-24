@@ -5,7 +5,11 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft, Target, Calendar, DollarSign, Camera } from "lucide-react";
 import { useState } from "react";
 
-const CreateGoal = () => {
+interface CreateGoalProps {
+  onNavigate?: (screen: string) => void;
+}
+
+const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const categories = [
@@ -22,7 +26,12 @@ const CreateGoal = () => {
       {/* Header */}
       <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground">
         <div className="flex items-center gap-4 mb-4">
-          <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/20">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-primary-foreground hover:bg-primary-foreground/20"
+            onClick={() => onNavigate?.('goals')}
+          >
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <h1 className="text-xl font-semibold">Create New Goal</h1>
@@ -119,7 +128,10 @@ const CreateGoal = () => {
 
         {/* Create Button */}
         <div className="space-y-3 pt-4">
-          <Button className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70">
+          <Button 
+            className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
+            onClick={() => onNavigate?.('goals')}
+          >
             <Target className="h-4 w-4 mr-2" />
             Create Goal
           </Button>
