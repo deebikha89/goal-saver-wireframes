@@ -60,7 +60,7 @@ const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
               <TrendingUp className="h-4 w-4" />
               <span className="text-sm font-medium">Total Saved</span>
             </div>
-            <div className="text-2xl font-bold">$13,850</div>
+            <div className="text-2xl font-bold">KD 13,850</div>
             <div className="text-sm opacity-90">Across 3 goals</div>
           </div>
         </Card>
@@ -95,8 +95,8 @@ const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
 
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="font-medium text-foreground">${goal.current.toLocaleString()}</span>
-                  <span className="text-muted-foreground">${goal.target.toLocaleString()}</span>
+                  <span className="font-medium text-foreground">KD {goal.current.toLocaleString()}</span>
+                  <span className="text-muted-foreground">KD {goal.target.toLocaleString()}</span>
                 </div>
                 <Progress value={goal.progress} className="h-2" />
                 <div className="text-xs text-muted-foreground text-right">

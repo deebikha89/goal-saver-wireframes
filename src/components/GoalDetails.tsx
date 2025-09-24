@@ -69,10 +69,10 @@ const GoalDetails = ({ onNavigate }: GoalDetailsProps) => {
           <div className="text-center space-y-4">
             <div className="space-y-2">
               <div className="text-3xl font-bold text-foreground">
-                ${goal.current.toLocaleString()}
+                KD {goal.current.toLocaleString()}
               </div>
               <div className="text-muted-foreground">
-                of ${goal.target.toLocaleString()} goal
+                of KD {goal.target.toLocaleString()} goal
               </div>
             </div>
 
@@ -80,7 +80,7 @@ const GoalDetails = ({ onNavigate }: GoalDetailsProps) => {
               <Progress value={goal.progress} className="h-3" />
               <div className="flex justify-between text-sm text-muted-foreground">
                 <span>{goal.progress}% complete</span>
-                <span>${(goal.target - goal.current).toLocaleString()} to go</span>
+                <span>KD {(goal.target - goal.current).toLocaleString()} to go</span>
               </div>
             </div>
 
@@ -120,7 +120,7 @@ const GoalDetails = ({ onNavigate }: GoalDetailsProps) => {
               <p className="text-sm text-muted-foreground">Monthly contribution</p>
             </div>
             <div className="text-right">
-              <div className="font-semibold text-foreground">${goal.monthlyContribution}</div>
+              <div className="font-semibold text-foreground">KD {goal.monthlyContribution}</div>
               <Button variant="ghost" size="sm" className="text-xs h-auto p-0">
                 Edit
               </Button>
@@ -144,7 +144,7 @@ const GoalDetails = ({ onNavigate }: GoalDetailsProps) => {
                   </div>
                 </div>
                 <div className="font-semibold text-success">
-                  +${transaction.amount}
+                  +KD {transaction.amount}
                 </div>
               </div>
             </Card>

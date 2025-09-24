@@ -55,7 +55,7 @@ const AddMoney = ({ onNavigate }: AddMoneyProps) => {
     <div className="max-w-sm mx-auto bg-background min-h-screen relative">
       <MobileNotification
         title="Funds Added Successfully!"
-        description={`$${amount} has been added to your Emergency Fund`}
+        description={`KD ${amount} has been added to your Emergency Fund`}
         show={showNotification}
         onDismiss={() => setShowNotification(false)}
       />
@@ -78,7 +78,7 @@ const AddMoney = ({ onNavigate }: AddMoneyProps) => {
           <div className="text-center">
             <div className="text-sm opacity-90 mb-1">Adding to</div>
             <div className="font-semibold">Emergency Fund</div>
-            <div className="text-sm opacity-90">$3,250 of $5,000</div>
+            <div className="text-sm opacity-90">KD 3,250 of KD 5,000</div>
           </div>
         </Card>
       </div>
@@ -108,7 +108,7 @@ const AddMoney = ({ onNavigate }: AddMoneyProps) => {
                   onClick={() => setAmount(quickAmount.toString())}
                   className="text-sm"
                 >
-                  ${quickAmount}
+                  KD {quickAmount}
                 </Button>
               ))}
             </div>
@@ -163,7 +163,7 @@ const AddMoney = ({ onNavigate }: AddMoneyProps) => {
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Amount</span>
-                <span className="font-medium text-foreground">${amount}</span>
+                <span className="font-medium text-foreground">KD {amount}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Transfer time</span>
@@ -172,7 +172,7 @@ const AddMoney = ({ onNavigate }: AddMoneyProps) => {
               <div className="border-t border-accent/20 pt-2 mt-3">
                 <div className="flex justify-between">
                   <span className="font-medium text-foreground">New balance</span>
-                  <span className="font-semibold text-accent">${(3250 + parseFloat(amount || "0")).toLocaleString()}</span>
+                  <span className="font-semibold text-accent">KD {(3250 + parseFloat(amount || "0")).toLocaleString()}</span>
                 </div>
               </div>
             </div>
@@ -187,7 +187,7 @@ const AddMoney = ({ onNavigate }: AddMoneyProps) => {
           onClick={handleAddMoney}
         >
           <DollarSign className="h-4 w-4 mr-2" />
-          Add ${amount || "0"} to Goal
+          Add KD {amount || "0"} to Goal
         </Button>
       </div>
     </div>
