@@ -39,9 +39,9 @@ const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
   ];
 
   return (
-    <div className="max-w-sm mx-auto bg-background min-h-screen">
+    <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground relative">
+      <div className="bg-header p-6 text-header-foreground relative shadow-sm">
         {/* ABK Logo */}
         <div className="absolute top-4 right-4">
           <img 
@@ -52,25 +52,25 @@ const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
         </div>
         
         <div className="flex items-center justify-between mb-4 mr-20">
-          <h1 className="text-xl font-semibold">My Goals</h1>
+          <h1 className="text-xl font-semibold text-header-foreground">My Goals</h1>
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-primary-foreground hover:bg-primary-foreground/20"
+            className="text-header-foreground hover:bg-header-foreground/10"
             onClick={() => onNavigate?.('create')}
           >
             <Plus className="h-5 w-5" />
           </Button>
         </div>
         
-        <Card className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground">
+        <Card className="bg-base/10 border-base/20 text-header-foreground shadow-sm">
           <div className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="h-4 w-4" />
               <span className="text-sm font-medium">Total Saved</span>
             </div>
             <div className="text-2xl font-bold">KD 13,850</div>
-            <div className="text-sm opacity-90">Across 3 goals</div>
+            <div className="text-sm opacity-70">Across 3 goals</div>
           </div>
         </Card>
       </div>

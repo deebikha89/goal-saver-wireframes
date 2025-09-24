@@ -22,9 +22,9 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
   ];
 
   return (
-    <div className="max-w-sm mx-auto bg-background min-h-screen">
+    <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground relative">
+      <div className="bg-header p-6 text-header-foreground relative shadow-sm">
         {/* ABK Logo */}
         <div className="absolute top-4 right-4">
           <img 
@@ -38,12 +38,12 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-primary-foreground hover:bg-primary-foreground/20"
+            className="text-header-foreground hover:bg-header-foreground/10"
             onClick={() => onNavigate?.('goals')}
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <h1 className="text-xl font-semibold">Create New Goal</h1>
+          <h1 className="text-xl font-semibold text-header-foreground">Create New Goal</h1>
         </div>
       </div>
 
@@ -138,7 +138,7 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
         {/* Create Button */}
         <div className="space-y-3 pt-4">
           <Button 
-            className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
+            className="w-full bg-gradient-to-r from-base to-base/90 hover:from-base/90 hover:to-base/80 text-base-foreground"
             onClick={() => onNavigate?.('goals')}
           >
             <Target className="h-4 w-4 mr-2" />

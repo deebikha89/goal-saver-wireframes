@@ -58,7 +58,7 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
   ];
 
   return (
-    <div className="max-w-sm mx-auto bg-background min-h-screen relative">
+    <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative">
       <MobileNotification
         title="Funds Added Successfully!"
         description={`KD ${amount} has been added to your Emergency Fund`}
@@ -67,7 +67,7 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
       />
       
       {/* Header */}
-      <div className="bg-gradient-to-r from-accent to-accent/80 p-6 text-accent-foreground relative">
+      <div className="bg-header p-6 text-header-foreground relative shadow-sm">
         {/* ABK Logo */}
         <div className="absolute top-4 right-4">
           <img 
@@ -81,19 +81,19 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-accent-foreground hover:bg-accent-foreground/20"
+            className="text-header-foreground hover:bg-header-foreground/10"
             onClick={() => onNavigate?.('details')}
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <h1 className="text-xl font-semibold">Add Money</h1>
+          <h1 className="text-xl font-semibold text-header-foreground">Add Money</h1>
         </div>
         
-        <Card className="bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground p-4">
+        <Card className="bg-base/10 border-base/20 text-header-foreground p-4 shadow-sm">
           <div className="text-center">
-            <div className="text-sm opacity-90 mb-1">Adding to</div>
+            <div className="text-sm opacity-70 mb-1">Adding to</div>
             <div className="font-semibold">Emergency Fund</div>
-            <div className="text-sm opacity-90">KD 3,250 of KD 5,000</div>
+            <div className="text-sm opacity-70">KD 3,250 of KD 5,000</div>
           </div>
         </Card>
       </div>
@@ -196,7 +196,7 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
 
         {/* Add Button */}
         <Button 
-          className="w-full bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70"
+          className="w-full bg-gradient-to-r from-base to-base/90 hover:from-base/90 hover:to-base/80 text-base-foreground"
           disabled={!amount || !selectedMethod}
           size="lg"
           onClick={handleAddMoney}

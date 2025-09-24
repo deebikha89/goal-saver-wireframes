@@ -35,9 +35,9 @@ const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
   ];
 
   return (
-    <div className="max-w-sm mx-auto bg-background min-h-screen">
+    <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground relative">
+      <div className="bg-header p-6 text-header-foreground relative shadow-sm">
         {/* ABK Logo */}
         <div className="absolute top-4 right-4">
           <img 
@@ -51,28 +51,28 @@ const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="text-primary-foreground hover:bg-primary-foreground/20"
+            className="text-header-foreground hover:bg-header-foreground/10"
             onClick={() => onNavigate?.('goals')}
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex gap-2">
-            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/20">
+            <Button variant="ghost" size="icon" className="text-header-foreground hover:bg-header-foreground/10">
               <Share2 className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/20">
+            <Button variant="ghost" size="icon" className="text-header-foreground hover:bg-header-foreground/10">
               <Settings className="h-4 w-4" />
             </Button>
           </div>
         </div>
 
         <div className="text-center space-y-4">
-          <div className="w-16 h-16 mx-auto bg-primary-foreground/20 rounded-full flex items-center justify-center">
-            <Target className="h-8 w-8 text-primary-foreground" />
+          <div className="w-16 h-16 mx-auto bg-base/20 rounded-full flex items-center justify-center">
+            <Target className="h-8 w-8 text-header-foreground" />
           </div>
           <div>
-            <h1 className="text-xl font-bold mb-1">{goal.name}</h1>
-            <div className="flex items-center justify-center gap-2 text-primary-foreground/90">
+            <h1 className="text-xl font-bold mb-1 text-header-foreground">{goal.name}</h1>
+            <div className="flex items-center justify-center gap-2 text-header-foreground/70">
               <Calendar className="h-4 w-4" />
               <span className="text-sm">{goal.daysLeft} days left</span>
             </div>
@@ -115,7 +115,7 @@ const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
       <div className="px-4 mb-6">
         <div className="grid grid-cols-2 gap-3">
           <Button 
-            className="bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground"
+            className="bg-gradient-to-r from-base to-base/90 hover:from-base/90 hover:to-base/80 text-base-foreground"
             onClick={() => onNavigate?.('addmoney')}
           >
             <Plus className="h-4 w-4 mr-2" />

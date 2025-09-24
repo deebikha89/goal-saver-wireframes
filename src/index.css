@@ -8,46 +8,55 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 248 50% 98%;
-    --foreground: 213 27% 20%;
+    /* ABK Blue color scheme - matching logo */
+    --background: 214 100% 97%;
+    --foreground: 214 25% 25%;
 
     --card: 0 0% 100%;
-    --card-foreground: 213 27% 20%;
+    --card-foreground: 214 25% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 213 27% 20%;
+    --popover-foreground: 214 25% 25%;
 
-    --primary: 213 78% 45%;
-    --primary-foreground: 210 40% 98%;
+    /* ABK Primary Blue - matching logo */
+    --primary: 214 85% 45%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 213 27% 20%;
+    --secondary: 214 100% 98%;
+    --secondary-foreground: 214 25% 25%;
 
-    --muted: 210 20% 94%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 214 20% 94%;
+    --muted-foreground: 214 16% 47%;
 
-    --accent: 142 70% 45%;
-    --accent-foreground: 210 40% 98%;
+    /* ABK Orange accent - matching logo */
+    --accent: 40 95% 55%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 213 78% 45%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 214 85% 45%;
 
     /* Banking specific colors */
     --success: 142 70% 45%;
-    --success-foreground: 210 40% 98%;
-    --warning: 48 96% 53%;
-    --warning-foreground: 213 27% 20%;
-    --info: 213 78% 45%;
-    --info-foreground: 210 40% 98%;
+    --success-foreground: 0 0% 100%;
+    --warning: 40 95% 55%;
+    --warning-foreground: 214 25% 25%;
+    --info: 214 85% 45%;
+    --info-foreground: 0 0% 100%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(213 78% 45%), hsl(213 78% 60%));
-    --gradient-success: linear-gradient(135deg, hsl(142 70% 45%), hsl(142 70% 60%));
-    --gradient-background: linear-gradient(180deg, hsl(248 50% 98%), hsl(210 20% 96%));
+    /* Header colors - white headers, blue base */
+    --header-bg: 0 0% 100%;
+    --header-foreground: 214 85% 45%;
+    --base-bg: 214 85% 45%;
+    --base-foreground: 0 0% 100%;
+
+    /* Gradients - ABK themed */
+    --gradient-primary: linear-gradient(135deg, hsl(214 85% 45%), hsl(214 85% 55%));
+    --gradient-accent: linear-gradient(135deg, hsl(40 95% 55%), hsl(40 95% 65%));
+    --gradient-background: linear-gradient(180deg, hsl(0 0% 100%), hsl(214 100% 97%));
 
     --radius: 0.5rem;
 

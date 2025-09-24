@@ -73,9 +73,9 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
   ];
 
   return (
-    <div className="max-w-sm mx-auto bg-background min-h-screen">
+    <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground relative">
+      <div className="bg-header p-6 text-header-foreground relative shadow-sm">
         {/* ABK Logo */}
         <div className="absolute top-4 right-4">
           <img 
@@ -87,14 +87,14 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
         
         <div className="flex items-center justify-between mb-6 mr-20">
           <div>
-            <h1 className="text-lg font-medium">Good Morning</h1>
-            <p className="text-sm opacity-90">Ahmed Al-Rashid</p>
+            <h1 className="text-lg font-medium text-header-foreground">Good Morning</h1>
+            <p className="text-sm text-header-foreground/70">Ahmed Al-Rashid</p>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/20">
+            <Button variant="ghost" size="icon" className="text-header-foreground hover:bg-header-foreground/10">
               <Bell className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/20">
+            <Button variant="ghost" size="icon" className="text-header-foreground hover:bg-header-foreground/10">
               <User className="h-5 w-5" />
             </Button>
           </div>
@@ -102,27 +102,27 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
 
         {/* Goal-Based Savings Banner */}
         <Card 
-          className="bg-gradient-to-r from-accent to-accent/80 border-accent-foreground/20 text-accent-foreground cursor-pointer hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+          className="bg-gradient-to-r from-base to-base/90 border-base-foreground/20 text-base-foreground cursor-pointer hover:shadow-lg transition-all duration-300 transform hover:scale-105"
           onClick={() => onNavigate?.('goals')}
         >
           <div className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-accent-foreground/20 p-2 rounded-full">
+                <div className="bg-base-foreground/20 p-2 rounded-full">
                   <Target className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm">Goal-Based Savings</h3>
-                  <p className="text-xs opacity-90">Start saving for your dreams</p>
+                  <h3 className="font-semibold text-sm text-base-foreground">Goal-Based Savings</h3>
+                  <p className="text-xs text-base-foreground/90">Start saving for your dreams</p>
                 </div>
               </div>
               <ArrowRight className="h-5 w-5" />
             </div>
             <div className="mt-3 flex items-center gap-2">
-              <Badge variant="secondary" className="text-xs bg-accent-foreground/20 text-accent-foreground hover:bg-accent-foreground/30">
+              <Badge variant="secondary" className="text-xs bg-base-foreground/20 text-base-foreground hover:bg-base-foreground/30">
                 New Feature
               </Badge>
-              <span className="text-xs opacity-80">Set & achieve financial goals</span>
+              <span className="text-xs text-base-foreground/80">Set & achieve financial goals</span>
             </div>
           </div>
         </Card>
