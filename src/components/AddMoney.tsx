@@ -59,6 +59,15 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
 
   return (
     <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative">
+      {/* ABK Logo Watermark */}
+      <div className="absolute bottom-4 right-4 opacity-10 pointer-events-none z-10">
+        <img 
+          src="/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png" 
+          alt="ABK Watermark" 
+          className="h-12 w-auto"
+        />
+      </div>
+      
       <MobileNotification
         title="Funds Added Successfully!"
         description={`KD ${amount} has been added to your Emergency Fund`}
@@ -68,16 +77,7 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
       
       {/* Header */}
       <div className="bg-header p-6 text-header-foreground relative shadow-sm">
-        {/* ABK Logo */}
-        <div className="absolute top-4 right-4">
-          <img 
-            src="/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png" 
-            alt="ABK Logo" 
-            className="h-8 w-auto"
-          />
-        </div>
-        
-        <div className="flex items-center gap-4 mb-4 mr-20">
+        <div className="flex items-center gap-4 mb-4">
           <Button 
             variant="ghost" 
             size="icon" 
