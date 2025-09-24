@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Plus, Target, TrendingUp, Calendar, DollarSign } from "lucide-react";
 
-const GoalDashboard = () => {
+interface GoalDashboardProps {
+  onNavigate?: (screen: string) => void;
+}
+
+const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
   const goals = [
     {
       id: 1,
@@ -40,7 +44,12 @@ const GoalDashboard = () => {
       <div className="bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-xl font-semibold">My Goals</h1>
-          <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/20">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-primary-foreground hover:bg-primary-foreground/20"
+            onClick={() => onNavigate?.('create')}
+          >
             <Plus className="h-5 w-5" />
           </Button>
         </div>
@@ -61,7 +70,7 @@ const GoalDashboard = () => {
       <div className="p-4 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-foreground">Active Goals</h2>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" onClick={() => onNavigate?.('create')}>
             <Plus className="h-4 w-4 mr-2" />
             New Goal
           </Button>
@@ -96,11 +105,20 @@ const GoalDashboard = () => {
               </div>
 
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="flex-1">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="flex-1"
+                  onClick={() => onNavigate?.('addmoney')}
+                >
                   <DollarSign className="h-3 w-3 mr-1" />
                   Add Money
                 </Button>
-                <Button variant="ghost" size="sm">
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => onNavigate?.('details')}
+                >
                   View Details
                 </Button>
               </div>
@@ -114,11 +132,21 @@ const GoalDashboard = () => {
         <Card className="p-4 bg-muted/30">
           <h3 className="font-medium mb-3 text-foreground">Quick Actions</h3>
           <div className="grid grid-cols-2 gap-2">
-            <Button variant="outline" size="sm" className="justify-start">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="justify-start"
+              onClick={() => onNavigate?.('create')}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Create Goal
             </Button>
-            <Button variant="outline" size="sm" className="justify-start">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="justify-start"
+              onClick={() => onNavigate?.('details')}
+            >
               <TrendingUp className="h-4 w-4 mr-2" />
               View Progress
             </Button>

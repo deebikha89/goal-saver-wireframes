@@ -19,6 +19,10 @@ const WireframeContainer = () => {
 
   const CurrentComponent = screens.find(screen => screen.id === currentScreen)?.component || GoalDashboard;
 
+  const handleNavigate = (screen: string) => {
+    setCurrentScreen(screen);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-muted/30 via-background to-muted/20 p-4">
       <div className="max-w-6xl mx-auto">
@@ -51,11 +55,11 @@ const WireframeContainer = () => {
             <div className="relative">
               {/* Mobile Frame */}
               <div className="bg-foreground rounded-[3rem] p-2 shadow-2xl">
-                <div className="bg-background rounded-[2.5rem] overflow-hidden" style={{ width: '320px', height: '640px' }}>
-                  <div className="h-full overflow-auto">
-                    <CurrentComponent />
+                  <div className="bg-background rounded-[2.5rem] overflow-hidden" style={{ width: '320px', height: '640px' }}>
+                    <div className="h-full overflow-auto">
+                      <CurrentComponent onNavigate={handleNavigate} />
+                    </div>
                   </div>
-                </div>
               </div>
               {/* Mobile Details */}
               <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-foreground text-background px-3 py-1 rounded-full text-xs font-medium">
