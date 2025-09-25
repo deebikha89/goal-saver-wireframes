@@ -4,9 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Target, Calendar as CalendarIcon, Coins, Camera } from "lucide-react";
-import { useState } from "react";
-import { format } from "date-fns";
+import { useState, useEffect } from "react";
+import { format, differenceInMonths, differenceInWeeks, differenceInYears } from "date-fns";
 import { cn } from "@/lib/utils";
 import PhotoPicker from "./PhotoPicker";
 
@@ -17,9 +18,50 @@ interface CreateGoalProps {
 const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [targetDate, setTargetDate] = useState<Date>();
+  const [targetAmount, setTargetAmount] = useState<string>("");
+  const [frequency, setFrequency] = useState<string>("monthly");
+  const [calculatedContribution, setCalculatedContribution] = useState<number>(0);
   const [selectedPhoto, setSelectedPhoto] = useState<string>("");
   const [selectedPhotoCategory, setSelectedPhotoCategory] = useState<string>("");
   const [showPhotoPicker, setShowPhotoPicker] = useState(false);
+
+  // Auto-calculate contribution based on target amount, date, and frequency
+  useEffect(() => {
+    if (targetAmount && targetDate) {
+      const amount = parseFloat(targetAmount.replace(/,/g, ''));
+      if (!isNaN(amount) && amount > 0) {
+        const now = new Date();
+        let periods = 0;
+        
+        switch (frequency) {
+          case "weekly":
+            periods = differenceInWeeks(targetDate, now);
+            break;
+          case "monthly":
+            periods = differenceInMonths(targetDate, now);
+            break;
+          case "half-yearly":
+            periods = Math.ceil(differenceInMonths(targetDate, now) / 6);
+            break;
+          case "yearly":
+            periods = differenceInYears(targetDate, now);
+            break;
+          default:
+            periods = differenceInMonths(targetDate, now);
+        }
+        
+        if (periods > 0) {
+          setCalculatedContribution(Math.ceil(amount / periods));
+        } else {
+          setCalculatedContribution(0);
+        }
+      } else {
+        setCalculatedContribution(0);
+      }
+    } else {
+      setCalculatedContribution(0);
+    }
+  }, [targetAmount, targetDate, frequency]);
 
   const handlePhotoSelect = (photo: string, category: string) => {
     setSelectedPhoto(photo);
@@ -100,6 +142,8 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
                 <Input 
                   id="targetAmount" 
                   placeholder="5,000"
+                  value={targetAmount}
+                  onChange={(e) => setTargetAmount(e.target.value)}
                   className="pl-9 border-input"
                 />
               </div>
@@ -160,17 +204,46 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
           </div>
         </Card>
 
-        {/* Monthly Contribution */}
+        {/* Contribution Settings */}
         <Card className="p-4 space-y-4">
-          <Label className="text-sm font-medium">Monthly Contribution (Optional)</Label>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sm font-semibold text-muted-foreground">KD</span>
-            <Input 
-              placeholder="200"
-              className="pl-9 border-input"
-            />
+          <Label className="text-sm font-medium">Contribution Settings</Label>
+          
+          {/* Frequency Selection */}
+          <div className="space-y-2">
+            <Label htmlFor="frequency" className="text-sm font-medium">Contribution Frequency</Label>
+            <Select value={frequency} onValueChange={setFrequency}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select frequency" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="weekly">Weekly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="half-yearly">Half Yearly</SelectItem>
+                <SelectItem value="yearly">Yearly</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-          <p className="text-xs text-muted-foreground">We'll automatically save this amount each month</p>
+
+          {/* Calculated Contribution Display */}
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">
+              Suggested {frequency.charAt(0).toUpperCase() + frequency.slice(1)} Contribution
+            </Label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sm font-semibold text-muted-foreground">KD</span>
+              <Input 
+                value={calculatedContribution > 0 ? calculatedContribution.toLocaleString() : "0"}
+                readOnly
+                className="pl-9 border-input bg-muted/30"
+              />
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {calculatedContribution > 0 
+                ? `Based on your target amount and date, save KD ${calculatedContribution.toLocaleString()} ${frequency.replace('-', ' ')}`
+                : "Enter target amount and date to see suggested contribution"
+              }
+            </p>
+          </div>
         </Card>
 
         {/* Create Button */}
