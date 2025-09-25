@@ -139,9 +139,14 @@ All colors MUST be HSL.
     background-image: url('/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 120px 120px;
-    opacity: 0.04;
+    background-size: 150px 150px;
+    opacity: 0.08;
     z-index: 0;
     pointer-events: none;
+  }
+
+  .mobile-watermark > * {
+    position: relative;
+    z-index: 1;
   }
 }
