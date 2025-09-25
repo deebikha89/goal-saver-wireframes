@@ -75,6 +75,9 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
     { icon: "💍", name: "Wedding", color: "bg-pink-100" },
     { icon: "🎓", name: "Education", color: "bg-purple-100" },
     { icon: "⚡", name: "Emergency", color: "bg-red-100" },
+    { icon: "🎁", name: "Gift", color: "bg-orange-100" },
+    { icon: "🎂", name: "Birthday", color: "bg-indigo-100" },
+    { icon: "📦", name: "Miscellaneous", color: "bg-gray-100" },
   ];
 
   return (
