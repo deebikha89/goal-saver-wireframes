@@ -78,9 +78,16 @@ const BankingDashboard = ({ onNavigate }: BankingDashboardProps) => {
       {/* Header */}
       <div className="bg-header p-6 text-header-foreground relative shadow-sm z-10">
         <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-lg font-medium text-header-foreground">Good Morning</h1>
-            <p className="text-sm text-header-foreground/70">Ahmed Al-Rashid</p>
+          <div className="flex items-center gap-3">
+            <img 
+              src="/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png" 
+              alt="ABK Bank Logo" 
+              className="h-8 w-8 object-contain"
+            />
+            <div>
+              <h1 className="text-lg font-medium text-header-foreground">Good Morning</h1>
+              <p className="text-sm text-header-foreground/70">Ahmed Al-Rashid</p>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" className="text-header-foreground hover:bg-header-foreground/10">
