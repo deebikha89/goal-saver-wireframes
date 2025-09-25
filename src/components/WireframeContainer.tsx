@@ -31,9 +31,10 @@ const WireframeContainer = () => {
   const [currentScreen, setCurrentScreen] = useState("banking");
   const [transactions, setTransactions] = useState<Transaction[]>([
     { id: "1", date: "Sep 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
-    { id: "2", date: "Sep 10", amount: 50, type: "Manual Add", icon: "➕" },
-    { id: "3", date: "Aug 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
-    { id: "4", date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉" },
+    { id: "2", date: "Sep 12", amount: -100, type: "Emergency Withdrawal", icon: "➖", paymentMethod: "Goal Savings" },
+    { id: "3", date: "Sep 10", amount: 50, type: "Manual Add", icon: "➕" },
+    { id: "4", date: "Aug 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
+    { id: "5", date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉" },
   ]);
 
   const [goal, setGoal] = useState<Goal>({
@@ -69,6 +70,29 @@ const WireframeContainer = () => {
     }));
   };
 
+  const withdrawTransaction = (amount: number, reason: string) => {
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    
+    const newTransaction: Transaction = {
+      id: Date.now().toString(),
+      date: formattedDate,
+      amount: -parseFloat(amount.toString()), // Negative amount for withdrawal
+      type: reason || "Manual Withdraw",
+      icon: "➖",
+      paymentMethod: "Goal Savings"
+    };
+
+    setTransactions(prev => [newTransaction, ...prev]);
+    
+    // Update goal current amount (ensure it doesn't go below 0)
+    setGoal(prev => ({
+      ...prev,
+      current: Math.max(0, prev.current - parseFloat(amount.toString())),
+      onTrack: Math.max(0, prev.current - parseFloat(amount.toString())) >= (prev.target * 0.8)
+    }));
+  };
+
   const screens = [
     { id: "banking", name: "Banking Dashboard", component: BankingDashboard },
     { id: "goals", name: "Goals Dashboard", component: GoalDashboard },
@@ -88,7 +112,7 @@ const WireframeContainer = () => {
     
     switch (currentScreen) {
       case 'details':
-        return <GoalDetails {...baseProps} transactions={transactions} goal={goal} />;
+        return <GoalDetails {...baseProps} transactions={transactions} goal={goal} onWithdraw={withdrawTransaction} />;
       case 'addmoney':
         return <AddMoney {...baseProps} onAddTransaction={addTransaction} />;
       case 'banking':

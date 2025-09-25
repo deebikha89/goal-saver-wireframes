@@ -24,9 +24,10 @@ interface GoalDetailsProps {
     paymentMethod?: string;
   }>;
   goal?: Goal;
+  onWithdraw?: (amount: number, reason: string) => void;
 }
 
-const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsProps) => {
+const GoalDetails = ({ onNavigate, transactions, goal: goalProp, onWithdraw }: GoalDetailsProps) => {
   const defaultGoal = {
     name: "Emergency Fund",
     target: 5000,
@@ -40,11 +41,20 @@ const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsPr
   const goal = goalProp || defaultGoal;
   const progress = Math.round((goal.current / goal.target) * 100);
 
+  const handleWithdraw = () => {
+    const amount = prompt('Enter withdrawal amount (KD):');
+    if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
+      const reason = prompt('Withdrawal reason (optional):') || 'Manual Withdraw';
+      onWithdraw?.(Number(amount), reason);
+    }
+  };
+
   const recentTransactions = transactions || [
     { id: "1", date: "Sep 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
-    { id: "2", date: "Sep 10", amount: 50, type: "Manual Add", icon: "➕" },
-    { id: "3", date: "Aug 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
-    { id: "4", date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉" },
+    { id: "2", date: "Sep 12", amount: -100, type: "Emergency Withdrawal", icon: "➖", paymentMethod: "Goal Savings" },
+    { id: "3", date: "Sep 10", amount: 50, type: "Manual Add", icon: "➕" },
+    { id: "4", date: "Aug 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
+    { id: "5", date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉" },
   ];
 
   return (
@@ -126,7 +136,7 @@ const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsPr
             <Plus className="h-4 w-4 mr-2" />
             Add Money
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={handleWithdraw}>
             <Minus className="h-4 w-4 mr-2" />
             Withdraw
           </Button>
@@ -168,8 +178,8 @@ const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsPr
                     </div>
                   </div>
                 </div>
-                <div className="font-semibold text-success">
-                  +KD {transaction.amount}
+                <div className={`font-semibold ${transaction.amount < 0 ? 'text-destructive' : 'text-success'}`}>
+                  {transaction.amount < 0 ? '' : '+'}KD {Math.abs(transaction.amount)}
                 </div>
               </div>
             </Card>
