@@ -184,7 +184,7 @@ const WireframeContainer = () => {
             <div className="relative">
               {/* Mobile Frame */}
               <div className="bg-foreground rounded-[3rem] p-2 shadow-2xl">
-                  <div className="bg-background rounded-[2.5rem] overflow-hidden relative" style={{ width: '320px', height: '640px' }}>
+                  <div className="bg-background rounded-[2.5rem] overflow-hidden relative mobile-watermark" style={{ width: '320px', height: '640px' }}>
                     <div className="h-full overflow-auto">
                       {renderCurrentComponent()}
                     </div>
