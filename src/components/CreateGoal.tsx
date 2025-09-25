@@ -8,6 +8,7 @@ import { ArrowLeft, Target, Calendar as CalendarIcon, Coins, Camera } from "luci
 import { useState } from "react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import PhotoPicker from "./PhotoPicker";
 
 interface CreateGoalProps {
   onNavigate?: (screen: string) => void;
@@ -16,6 +17,14 @@ interface CreateGoalProps {
 const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [targetDate, setTargetDate] = useState<Date>();
+  const [selectedPhoto, setSelectedPhoto] = useState<string>("");
+  const [selectedPhotoCategory, setSelectedPhotoCategory] = useState<string>("");
+  const [showPhotoPicker, setShowPhotoPicker] = useState(false);
+
+  const handlePhotoSelect = (photo: string, category: string) => {
+    setSelectedPhoto(photo);
+    setSelectedPhotoCategory(category);
+  };
 
   const categories = [
     { icon: "🏠", name: "Home", color: "bg-blue-100" },
@@ -48,13 +57,27 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
         {/* Goal Image */}
         <Card className="p-6">
           <div className="text-center space-y-4">
-            <div className="w-24 h-24 mx-auto bg-muted rounded-full flex items-center justify-center border-2 border-dashed border-muted-foreground/30">
-              <Camera className="h-8 w-8 text-muted-foreground" />
+            <div className="w-24 h-24 mx-auto bg-muted rounded-full flex items-center justify-center border-2 border-dashed border-muted-foreground/30 overflow-hidden">
+              {selectedPhoto ? (
+                <img 
+                  src={selectedPhoto} 
+                  alt="Selected goal" 
+                  className="w-full h-full object-cover rounded-full"
+                />
+              ) : (
+                <Camera className="h-8 w-8 text-muted-foreground" />
+              )}
             </div>
-            <Button variant="outline" size="sm">
-              Add Photo
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setShowPhotoPicker(true)}
+            >
+              {selectedPhoto ? "Change Photo" : "Add Photo"}
             </Button>
-            <p className="text-xs text-muted-foreground">Add a photo to visualize your goal</p>
+            <p className="text-xs text-muted-foreground">
+              {selectedPhoto ? selectedPhotoCategory : "Add a photo to visualize your goal"}
+            </p>
           </div>
         </Card>
 
@@ -164,6 +187,13 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
           </Button>
         </div>
       </div>
+
+      <PhotoPicker
+        open={showPhotoPicker}
+        onOpenChange={setShowPhotoPicker}
+        onSelectPhoto={handlePhotoSelect}
+        selectedPhoto={selectedPhoto}
+      />
     </div>
   );
 };
