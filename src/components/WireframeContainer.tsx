@@ -8,6 +8,9 @@ import CreateGoal from "./CreateGoal";
 import GoalDetails from "./GoalDetails";
 import AddMoney from "./AddMoney";
 import WithdrawMoney from "./WithdrawMoney";
+import MobileNotification from "./MobileNotification";
+import ReminderSettings from "./ReminderSettings";
+import { NotificationService } from "@/services/NotificationService";
 
 interface Transaction {
   id: string;
@@ -64,11 +67,15 @@ const WireframeContainer = () => {
     setTransactions(prev => [newTransaction, ...prev]);
     
     // Update goal current amount
-    setGoal(prev => ({
-      ...prev,
-      current: prev.current + parseFloat(amount.toString()),
-      onTrack: (prev.current + parseFloat(amount.toString())) >= (prev.target * 0.8) // Simple on-track logic
-    }));
+    const newGoal = {
+      ...goal,
+      current: goal.current + parseFloat(amount.toString()),
+      onTrack: (goal.current + parseFloat(amount.toString())) >= (goal.target * 0.8)
+    };
+    setGoal(newGoal);
+
+    // Show notification for credit
+    NotificationService.showTransactionNotification('credit', parseFloat(amount.toString()), newGoal.name);
   };
 
   const withdrawTransaction = (amount: number, reason: string) => {
@@ -87,11 +94,15 @@ const WireframeContainer = () => {
     setTransactions(prev => [newTransaction, ...prev]);
     
     // Update goal current amount (ensure it doesn't go below 0)
-    setGoal(prev => ({
-      ...prev,
-      current: Math.max(0, prev.current - parseFloat(amount.toString())),
-      onTrack: Math.max(0, prev.current - parseFloat(amount.toString())) >= (prev.target * 0.8)
-    }));
+    const newGoal = {
+      ...goal,
+      current: Math.max(0, goal.current - parseFloat(amount.toString())),
+      onTrack: Math.max(0, goal.current - parseFloat(amount.toString())) >= (goal.target * 0.8)
+    };
+    setGoal(newGoal);
+
+    // Show notification for debit
+    NotificationService.showTransactionNotification('debit', parseFloat(amount.toString()), newGoal.name);
   };
 
   const screens = [
@@ -101,6 +112,7 @@ const WireframeContainer = () => {
     { id: "details", name: "Goal Details", component: GoalDetails },
     { id: "addmoney", name: "Add Money", component: AddMoney },
     { id: "withdraw", name: "Withdraw Money", component: WithdrawMoney },
+    { id: "reminders", name: "Reminder Settings", component: ReminderSettings },
   ];
 
   const CurrentComponent = screens.find(screen => screen.id === currentScreen)?.component || BankingDashboard;
@@ -119,6 +131,8 @@ const WireframeContainer = () => {
         return <AddMoney {...baseProps} onAddTransaction={addTransaction} />;
       case 'withdraw':
         return <WithdrawMoney {...baseProps} onWithdrawTransaction={withdrawTransaction} goal={goal} />;
+      case 'reminders':
+        return <ReminderSettings {...baseProps} goal={goal} />;
       case 'banking':
         return <BankingDashboard {...baseProps} />;
       case 'goals':
@@ -132,6 +146,7 @@ const WireframeContainer = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-header via-background to-muted/20 p-4">
+      <MobileNotification />
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -291,6 +306,25 @@ const WireframeContainer = () => {
                       <li>Withdrawal reason tracking</li>
                       <li>Transaction limits</li>
                       <li>Real-time balance updates</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {currentScreen === "reminders" && (
+                <div className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Payment reminder settings with push notifications 
+                    for regular savings contributions.
+                  </p>
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-foreground">Key Features:</h4>
+                    <ul className="space-y-1 text-sm text-muted-foreground list-disc list-inside">
+                      <li>Weekly and monthly reminder options</li>
+                      <li>Custom reminder amounts</li>
+                      <li>Time-based scheduling</li>
+                      <li>Push notification integration</li>
+                      <li>Reminder management</li>
                     </ul>
                   </div>
                 </div>

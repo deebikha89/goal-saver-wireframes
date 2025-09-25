@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Coins, CreditCard, Smartphone, Building2 } from "lucide-react";
 import { useState } from "react";
-import MobileNotification from "./MobileNotification";
+import { useToast } from "@/hooks/use-toast";
 
 interface AddMoneyProps {
   onNavigate?: (screen: string) => void;
@@ -14,21 +14,24 @@ interface AddMoneyProps {
 const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
   const [amount, setAmount] = useState("");
   const [selectedMethod, setSelectedMethod] = useState("");
-  const [showNotification, setShowNotification] = useState(false);
+  const { toast } = useToast();
 
   const handleAddMoney = () => {
     if (amount && selectedMethod && onAddTransaction) {
       const selectedPaymentMethod = paymentMethods.find(m => m.id === selectedMethod);
       onAddTransaction(parseFloat(amount), selectedPaymentMethod?.name || "Unknown");
+      
+      // Show success toast
+      toast({
+        title: "💰 Funds Added Successfully!",
+        description: `KD ${amount} has been added to your Emergency Fund`,
+      });
+      
+      // Navigate back to details after a short delay
+      setTimeout(() => {
+        onNavigate?.('details');
+      }, 1500);
     }
-    
-    // Show mobile notification
-    setShowNotification(true);
-    
-    // Navigate back to details after a short delay
-    setTimeout(() => {
-      onNavigate?.('details');
-    }, 2000);
   };
 
   const quickAmounts = [25, 50, 100, 200];
@@ -59,13 +62,6 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
 
   return (
     <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative">
-      
-      <MobileNotification
-        title="Funds Added Successfully!"
-        description={`KD ${amount} has been added to your Emergency Fund`}
-        show={showNotification}
-        onDismiss={() => setShowNotification(false)}
-      />
       
       {/* Header */}
       <div className="bg-header p-6 text-header-foreground relative shadow-sm z-10">

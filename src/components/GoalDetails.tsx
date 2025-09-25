@@ -66,7 +66,12 @@ const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsPr
             <Button variant="ghost" size="icon" className="text-header-foreground hover:bg-header-foreground/10">
               <Share2 className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="icon" className="text-header-foreground hover:bg-header-foreground/10">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="text-header-foreground hover:bg-header-foreground/10"
+              onClick={() => onNavigate?.('reminders')}
+            >
               <Settings className="h-4 w-4" />
             </Button>
           </div>
