@@ -2,50 +2,41 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, Target, TrendingUp, Calendar, Plus, Minus, Settings, Share2 } from "lucide-react";
-
-interface Goal {
-  name: string;
-  target: number;
-  current: number;
-  deadline: string;
-  monthlyContribution: number;
-  daysLeft: number;
-  onTrack: boolean;
-}
+import { useGoals } from "@/contexts/GoalsContext";
+import { format, differenceInDays } from "date-fns";
 
 interface GoalDetailsProps {
-  onNavigate?: (screen: string) => void;
-  transactions?: Array<{
-    id: string;
-    date: string;
-    amount: number;
-    type: string;
-    icon: string;
-    paymentMethod?: string;
-  }>;
-  goal?: Goal;
+  onNavigate?: (screen: string, goalId?: string) => void;
+  selectedGoalId?: string;
 }
 
-const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsProps) => {
-  const defaultGoal = {
-    name: "Emergency Fund",
-    target: 5000,
-    current: 3250,
-    deadline: "December 31, 2024",
-    monthlyContribution: 300,
-    daysLeft: 45,
-    onTrack: true
-  };
+const GoalDetails = ({ onNavigate, selectedGoalId }: GoalDetailsProps) => {
+  const { goals } = useGoals();
+  
+  // Find the selected goal or default to first goal
+  const selectedGoal = goals.find(g => g.id === selectedGoalId) || goals[0];
+  
+  if (!selectedGoal) {
+    return (
+      <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-muted-foreground mb-4">No goals found</p>
+          <Button onClick={() => onNavigate?.('create')}>Create Your First Goal</Button>
+        </div>
+      </div>
+    );
+  }
 
-  const goal = goalProp || defaultGoal;
-  const progress = Math.round((goal.current / goal.target) * 100);
-
-  const recentTransactions = transactions || [
-    { id: "1", date: "Sep 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
-    { id: "2", date: "Sep 12", amount: -100, type: "Emergency Withdrawal", icon: "➖", paymentMethod: "Goal Savings" },
-    { id: "3", date: "Sep 10", amount: 50, type: "Manual Add", icon: "➕" },
-    { id: "4", date: "Aug 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
-    { id: "5", date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉" },
+  // Calculate days left
+  const deadline = new Date(selectedGoal.deadline);
+  const daysLeft = Math.max(0, differenceInDays(deadline, new Date()));
+  
+  // Mock recent transactions for now - in a real app this would come from the database
+  const recentTransactions = [
+    { id: "1", date: "Sep 15", amount: selectedGoal.contributionAmount, type: "Monthly Auto-Save", icon: "🔄" },
+    { id: "2", date: "Sep 10", amount: 50, type: "Manual Add", icon: "➕", paymentMethod: "Current Account" },
+    { id: "3", date: "Aug 15", amount: selectedGoal.contributionAmount, type: "Monthly Auto-Save", icon: "🔄" },
+    { id: "4", date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉", paymentMethod: "Current Account" },
   ];
 
   return (
@@ -78,14 +69,22 @@ const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsPr
         </div>
 
         <div className="text-center space-y-4">
-          <div className="w-16 h-16 mx-auto bg-base/20 rounded-full flex items-center justify-center">
-            <Target className="h-8 w-8 text-header-foreground" />
+          <div className="w-16 h-16 mx-auto bg-base/20 rounded-full flex items-center justify-center overflow-hidden">
+            {selectedGoal.photo ? (
+              <img 
+                src={selectedGoal.photo} 
+                alt={selectedGoal.name} 
+                className="w-full h-full object-cover rounded-full"
+              />
+            ) : (
+              <Target className="h-8 w-8 text-header-foreground" />
+            )}
           </div>
           <div>
-            <h1 className="text-xl font-bold mb-1 text-header-foreground">{goal.name}</h1>
+            <h1 className="text-xl font-bold mb-1 text-header-foreground">{selectedGoal.name}</h1>
             <div className="flex items-center justify-center gap-2 text-header-foreground/70">
               <Calendar className="h-4 w-4" />
-              <span className="text-sm">{goal.daysLeft} days left</span>
+              <span className="text-sm">{daysLeft} days left</span>
             </div>
           </div>
         </div>
@@ -97,22 +96,22 @@ const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsPr
           <div className="text-center space-y-4">
             <div className="space-y-2">
               <div className="text-3xl font-bold text-foreground">
-                KD {goal.current.toLocaleString()}
+                KD {selectedGoal.current.toLocaleString()}
               </div>
               <div className="text-muted-foreground">
-                of KD {goal.target.toLocaleString()} goal
+                of KD {selectedGoal.target.toLocaleString()} goal
               </div>
             </div>
 
             <div className="space-y-2">
-              <Progress value={progress} className="h-3" />
+              <Progress value={selectedGoal.progress} className="h-3" />
               <div className="flex justify-between text-sm text-muted-foreground">
-                <span>{progress}% complete</span>
-                <span>KD {(goal.target - goal.current).toLocaleString()} to go</span>
+                <span>{selectedGoal.progress}% complete</span>
+                <span>KD {(selectedGoal.target - selectedGoal.current).toLocaleString()} to go</span>
               </div>
             </div>
 
-            {goal.onTrack && (
+            {selectedGoal.progress >= 80 && (
               <div className="flex items-center justify-center gap-2 text-success text-sm">
                 <TrendingUp className="h-4 w-4" />
                 <span>On track to reach goal</span>
@@ -151,7 +150,7 @@ const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsPr
               <p className="text-sm text-muted-foreground">Monthly contribution</p>
             </div>
             <div className="text-right">
-              <div className="font-semibold text-foreground">KD {goal.monthlyContribution}</div>
+              <div className="font-semibold text-foreground">KD {selectedGoal.contributionAmount}</div>
               <Button variant="ghost" size="sm" className="text-xs h-auto p-0">
                 Edit
               </Button>

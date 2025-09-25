@@ -5,7 +5,7 @@ import { Plus, Target, TrendingUp, Calendar, Coins } from "lucide-react";
 import { useGoals } from "@/contexts/GoalsContext";
 
 interface GoalDashboardProps {
-  onNavigate?: (screen: string) => void;
+  onNavigate?: (screen: string, goalId?: string) => void;
 }
 
 const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
@@ -91,7 +91,7 @@ const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
                 <Button 
                   variant="ghost" 
                   size="sm"
-                  onClick={() => onNavigate?.('details')}
+                  onClick={() => onNavigate?.('details', goal.id)}
                 >
                   View Details
                 </Button>

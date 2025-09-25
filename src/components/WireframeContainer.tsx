@@ -34,6 +34,7 @@ interface Goal {
 
 const WireframeContainer = () => {
   const [currentScreen, setCurrentScreen] = useState("banking");
+  const [selectedGoalId, setSelectedGoalId] = useState<string>("");
   const [transactions, setTransactions] = useState<Transaction[]>([
     { id: "1", date: "Sep 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
     { id: "2", date: "Sep 12", amount: -100, type: "Emergency Withdrawal", icon: "➖", paymentMethod: "Goal Savings" },
@@ -120,8 +121,11 @@ const WireframeContainer = () => {
 
   const CurrentComponent = screens.find(screen => screen.id === currentScreen)?.component || BankingDashboard;
 
-  const handleNavigate = (screen: string) => {
+  const handleNavigate = (screen: string, goalId?: string) => {
     setCurrentScreen(screen);
+    if (goalId) {
+      setSelectedGoalId(goalId);
+    }
   };
 
   const renderCurrentComponent = () => {
@@ -129,7 +133,7 @@ const WireframeContainer = () => {
     
     switch (currentScreen) {
       case 'details':
-        return <GoalDetails {...baseProps} transactions={transactions} goal={goal} />;
+        return <GoalDetails {...baseProps} selectedGoalId={selectedGoalId} />;
       case 'addmoney':
         return <AddMoney {...baseProps} onAddTransaction={addTransaction} />;
       case 'withdraw':

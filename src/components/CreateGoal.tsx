@@ -14,7 +14,7 @@ import { toast } from "@/hooks/use-toast";
 import PhotoPicker from "./PhotoPicker";
 
 interface CreateGoalProps {
-  onNavigate?: (screen: string) => void;
+  onNavigate?: (screen: string, goalId?: string) => void;
 }
 
 const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
