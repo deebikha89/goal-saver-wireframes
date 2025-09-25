@@ -11,6 +11,7 @@ import WithdrawMoney from "./WithdrawMoney";
 import MobileNotification from "./MobileNotification";
 import ReminderSettings from "./ReminderSettings";
 import { NotificationService } from "@/services/NotificationService";
+import { Toaster } from "@/components/ui/toaster";
 
 interface Transaction {
   id: string;
@@ -177,9 +178,13 @@ const WireframeContainer = () => {
             <div className="relative">
               {/* Mobile Frame */}
               <div className="bg-foreground rounded-[3rem] p-2 shadow-2xl">
-                  <div className="bg-background rounded-[2.5rem] overflow-hidden" style={{ width: '320px', height: '640px' }}>
+                  <div className="bg-background rounded-[2.5rem] overflow-hidden relative" style={{ width: '320px', height: '640px' }}>
                     <div className="h-full overflow-auto">
                       {renderCurrentComponent()}
+                    </div>
+                    {/* Toast container positioned within mobile frame */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      <Toaster />
                     </div>
                   </div>
               </div>
