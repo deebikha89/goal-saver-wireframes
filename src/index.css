@@ -123,5 +123,29 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background-image: 
+      url('/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png'),
+      var(--gradient-background);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 300px 300px, cover;
+    background-attachment: fixed;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/lovable-uploads/bfb00db2-3d74-4130-883c-e02f7238466b.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 300px 300px;
+    opacity: 0.03;
+    z-index: -1;
+    pointer-events: none;
   }
 }
