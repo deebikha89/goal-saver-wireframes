@@ -7,6 +7,7 @@ import GoalDashboard from "./GoalDashboard";
 import CreateGoal from "./CreateGoal";
 import GoalDetails from "./GoalDetails";
 import AddMoney from "./AddMoney";
+import WithdrawMoney from "./WithdrawMoney";
 
 interface Transaction {
   id: string;
@@ -99,6 +100,7 @@ const WireframeContainer = () => {
     { id: "create", name: "Create Goal", component: CreateGoal },
     { id: "details", name: "Goal Details", component: GoalDetails },
     { id: "addmoney", name: "Add Money", component: AddMoney },
+    { id: "withdraw", name: "Withdraw Money", component: WithdrawMoney },
   ];
 
   const CurrentComponent = screens.find(screen => screen.id === currentScreen)?.component || BankingDashboard;
@@ -112,9 +114,11 @@ const WireframeContainer = () => {
     
     switch (currentScreen) {
       case 'details':
-        return <GoalDetails {...baseProps} transactions={transactions} goal={goal} onWithdraw={withdrawTransaction} />;
+        return <GoalDetails {...baseProps} transactions={transactions} goal={goal} />;
       case 'addmoney':
         return <AddMoney {...baseProps} onAddTransaction={addTransaction} />;
+      case 'withdraw':
+        return <WithdrawMoney {...baseProps} onWithdrawTransaction={withdrawTransaction} goal={goal} />;
       case 'banking':
         return <BankingDashboard {...baseProps} />;
       case 'goals':
@@ -268,6 +272,25 @@ const WireframeContainer = () => {
                       <li>Recurring payment option</li>
                       <li>Real-time balance preview</li>
                       <li>Instant transfer confirmation</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {currentScreen === "withdraw" && (
+                <div className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Secure withdrawal interface with amount validation 
+                    and withdrawal limits.
+                  </p>
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-foreground">Key Features:</h4>
+                    <ul className="space-y-1 text-sm text-muted-foreground list-disc list-inside">
+                      <li>Quick amount selection</li>
+                      <li>Balance validation</li>
+                      <li>Withdrawal reason tracking</li>
+                      <li>Transaction limits</li>
+                      <li>Real-time balance updates</li>
                     </ul>
                   </div>
                 </div>

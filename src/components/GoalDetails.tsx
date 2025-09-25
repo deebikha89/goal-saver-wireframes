@@ -24,10 +24,9 @@ interface GoalDetailsProps {
     paymentMethod?: string;
   }>;
   goal?: Goal;
-  onWithdraw?: (amount: number, reason: string) => void;
 }
 
-const GoalDetails = ({ onNavigate, transactions, goal: goalProp, onWithdraw }: GoalDetailsProps) => {
+const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsProps) => {
   const defaultGoal = {
     name: "Emergency Fund",
     target: 5000,
@@ -40,14 +39,6 @@ const GoalDetails = ({ onNavigate, transactions, goal: goalProp, onWithdraw }: G
 
   const goal = goalProp || defaultGoal;
   const progress = Math.round((goal.current / goal.target) * 100);
-
-  const handleWithdraw = () => {
-    const amount = prompt('Enter withdrawal amount (KD):');
-    if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
-      const reason = prompt('Withdrawal reason (optional):') || 'Manual Withdraw';
-      onWithdraw?.(Number(amount), reason);
-    }
-  };
 
   const recentTransactions = transactions || [
     { id: "1", date: "Sep 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
@@ -136,7 +127,10 @@ const GoalDetails = ({ onNavigate, transactions, goal: goalProp, onWithdraw }: G
             <Plus className="h-4 w-4 mr-2" />
             Add Money
           </Button>
-          <Button variant="outline" onClick={handleWithdraw}>
+          <Button 
+            variant="outline" 
+            onClick={() => onNavigate?.('withdraw')}
+          >
             <Minus className="h-4 w-4 mr-2" />
             Withdraw
           </Button>
