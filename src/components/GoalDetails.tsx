@@ -3,6 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, Target, TrendingUp, Calendar, Plus, Minus, Settings, Share2 } from "lucide-react";
 
+interface Goal {
+  name: string;
+  target: number;
+  current: number;
+  deadline: string;
+  monthlyContribution: number;
+  daysLeft: number;
+  onTrack: boolean;
+}
+
 interface GoalDetailsProps {
   onNavigate?: (screen: string) => void;
   transactions?: Array<{
@@ -13,19 +23,22 @@ interface GoalDetailsProps {
     icon: string;
     paymentMethod?: string;
   }>;
+  goal?: Goal;
 }
 
-const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
-  const goal = {
+const GoalDetails = ({ onNavigate, transactions, goal: goalProp }: GoalDetailsProps) => {
+  const defaultGoal = {
     name: "Emergency Fund",
     target: 5000,
     current: 3250,
     deadline: "December 31, 2024",
     monthlyContribution: 300,
-    progress: 65,
     daysLeft: 45,
     onTrack: true
   };
+
+  const goal = goalProp || defaultGoal;
+  const progress = Math.round((goal.current / goal.target) * 100);
 
   const recentTransactions = transactions || [
     { id: "1", date: "Sep 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
@@ -86,9 +99,9 @@ const GoalDetails = ({ onNavigate, transactions }: GoalDetailsProps) => {
             </div>
 
             <div className="space-y-2">
-              <Progress value={goal.progress} className="h-3" />
+              <Progress value={progress} className="h-3" />
               <div className="flex justify-between text-sm text-muted-foreground">
-                <span>{goal.progress}% complete</span>
+                <span>{progress}% complete</span>
                 <span>KD {(goal.target - goal.current).toLocaleString()} to go</span>
               </div>
             </div>

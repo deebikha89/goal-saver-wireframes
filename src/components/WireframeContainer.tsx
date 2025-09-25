@@ -17,6 +17,16 @@ interface Transaction {
   paymentMethod?: string;
 }
 
+interface Goal {
+  name: string;
+  target: number;
+  current: number;
+  deadline: string;
+  monthlyContribution: number;
+  daysLeft: number;
+  onTrack: boolean;
+}
+
 const WireframeContainer = () => {
   const [currentScreen, setCurrentScreen] = useState("banking");
   const [transactions, setTransactions] = useState<Transaction[]>([
@@ -25,6 +35,16 @@ const WireframeContainer = () => {
     { id: "3", date: "Aug 15", amount: 300, type: "Monthly Auto-Save", icon: "🔄" },
     { id: "4", date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉" },
   ]);
+
+  const [goal, setGoal] = useState<Goal>({
+    name: "Emergency Fund",
+    target: 5000,
+    current: 3250,
+    deadline: "December 31, 2024",
+    monthlyContribution: 300,
+    daysLeft: 45,
+    onTrack: true
+  });
 
   const addTransaction = (amount: number, paymentMethod: string) => {
     const today = new Date();
@@ -40,6 +60,13 @@ const WireframeContainer = () => {
     };
 
     setTransactions(prev => [newTransaction, ...prev]);
+    
+    // Update goal current amount
+    setGoal(prev => ({
+      ...prev,
+      current: prev.current + parseFloat(amount.toString()),
+      onTrack: (prev.current + parseFloat(amount.toString())) >= (prev.target * 0.8) // Simple on-track logic
+    }));
   };
 
   const screens = [
@@ -61,7 +88,7 @@ const WireframeContainer = () => {
     
     switch (currentScreen) {
       case 'details':
-        return <GoalDetails {...baseProps} transactions={transactions} />;
+        return <GoalDetails {...baseProps} transactions={transactions} goal={goal} />;
       case 'addmoney':
         return <AddMoney {...baseProps} onAddTransaction={addTransaction} />;
       case 'banking':
