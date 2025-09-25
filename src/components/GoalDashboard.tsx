@@ -2,41 +2,14 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Plus, Target, TrendingUp, Calendar, Coins } from "lucide-react";
+import { useGoals } from "@/contexts/GoalsContext";
 
 interface GoalDashboardProps {
   onNavigate?: (screen: string) => void;
 }
 
 const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
-  const goals = [
-    {
-      id: 1,
-      name: "Emergency Fund",
-      target: 5000,
-      current: 3250,
-      deadline: "Dec 2024",
-      color: "bg-primary",
-      progress: 65
-    },
-    {
-      id: 2,
-      name: "Dream Vacation",
-      target: 8000,
-      current: 2100,
-      deadline: "Jun 2025",
-      color: "bg-accent",
-      progress: 26
-    },
-    {
-      id: 3,
-      name: "New Car",
-      target: 25000,
-      current: 8500,
-      deadline: "Sep 2025",
-      color: "bg-warning",
-      progress: 34
-    }
-  ];
+  const { goals, getTotalSaved } = useGoals();
 
   return (
     <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative">
@@ -61,8 +34,8 @@ const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
               <TrendingUp className="h-4 w-4" />
               <span className="text-sm font-medium">Total Saved</span>
             </div>
-            <div className="text-2xl font-bold">KD 13,850</div>
-            <div className="text-sm opacity-70">Across 3 goals</div>
+            <div className="text-2xl font-bold">KD {getTotalSaved().toLocaleString()}</div>
+            <div className="text-sm opacity-70">Across {goals.length} goals</div>
           </div>
         </Card>
       </div>

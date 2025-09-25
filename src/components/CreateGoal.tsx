@@ -9,6 +9,8 @@ import { ArrowLeft, Target, Calendar as CalendarIcon, Coins, Camera } from "luci
 import { useState, useEffect } from "react";
 import { format, differenceInMonths, differenceInWeeks, differenceInYears } from "date-fns";
 import { cn } from "@/lib/utils";
+import { useGoals } from "@/contexts/GoalsContext";
+import { toast } from "@/hooks/use-toast";
 import PhotoPicker from "./PhotoPicker";
 
 interface CreateGoalProps {
@@ -16,6 +18,8 @@ interface CreateGoalProps {
 }
 
 const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
+  const { addGoal } = useGoals();
+  const [goalName, setGoalName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [targetDate, setTargetDate] = useState<Date>();
   const [targetAmount, setTargetAmount] = useState<string>("");
@@ -62,6 +66,58 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
       setCalculatedContribution(0);
     }
   }, [targetAmount, targetDate, frequency]);
+
+  const handleCreateGoal = () => {
+    if (!goalName.trim() || !targetAmount || !targetDate || !selectedCategory) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const amount = parseFloat(targetAmount.replace(/,/g, ''));
+    if (isNaN(amount) || amount <= 0) {
+      toast({
+        title: "Invalid Amount",
+        description: "Please enter a valid target amount",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Determine color based on category
+    const categoryColors: { [key: string]: string } = {
+      Home: "bg-blue-500",
+      Travel: "bg-green-500", 
+      Car: "bg-yellow-500",
+      Wedding: "bg-pink-500",
+      Education: "bg-purple-500",
+      Emergency: "bg-red-500",
+      Gift: "bg-orange-500",
+      Birthday: "bg-indigo-500",
+      Miscellaneous: "bg-gray-500"
+    };
+
+    addGoal({
+      name: goalName.trim(),
+      target: amount,
+      deadline: format(targetDate, "MMM yyyy"),
+      category: selectedCategory,
+      photo: selectedPhoto,
+      frequency: frequency,
+      contributionAmount: calculatedContribution,
+      color: categoryColors[selectedCategory] || "bg-primary"
+    });
+
+    toast({
+      title: "Goal Created!",
+      description: `Your ${goalName} goal has been created successfully`,
+    });
+
+    onNavigate?.('goals');
+  };
 
   const handlePhotoSelect = (photo: string, category: string) => {
     setSelectedPhoto(photo);
@@ -133,6 +189,8 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
             <Input 
               id="goalName" 
               placeholder="e.g., Dream Vacation to Italy"
+              value={goalName}
+              onChange={(e) => setGoalName(e.target.value)}
               className="border-input"
             />
           </div>
@@ -253,7 +311,7 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
         <div className="space-y-3 pt-4">
           <Button 
             className="w-full bg-gradient-to-r from-base to-base/90 hover:from-base/90 hover:to-base/80 text-base-foreground"
-            onClick={() => onNavigate?.('goals')}
+            onClick={handleCreateGoal}
           >
             <Target className="h-4 w-4 mr-2" />
             Create Goal
