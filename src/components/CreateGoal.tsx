@@ -112,11 +112,11 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal pl-9",
+                      "w-full justify-start text-left font-normal relative",
                       !targetDate && "text-muted-foreground"
                     )}
                   >
-                    <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" />
+                    <CalendarIcon className="h-4 w-4 mr-2" />
                     {targetDate ? format(targetDate, "MMM dd, yyyy") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
