@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, DollarSign, CreditCard, Smartphone, Building2 } from "lucide-react";
+import { ArrowLeft, Coins, CreditCard, Smartphone, Building2 } from "lucide-react";
 import { useState } from "react";
 import MobileNotification from "./MobileNotification";
 
@@ -96,7 +96,7 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
           <div className="space-y-4">
             <Label className="text-sm font-medium">Amount to Add</Label>
             <div className="relative">
-              <DollarSign className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-muted-foreground" />
+              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-lg font-semibold text-muted-foreground">KD</span>
               <Input 
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
@@ -193,7 +193,7 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
           size="lg"
           onClick={handleAddMoney}
         >
-          <DollarSign className="h-4 w-4 mr-2" />
+          <Coins className="h-4 w-4 mr-2" />
           Add KD {amount || "0"} to Goal
         </Button>
       </div>

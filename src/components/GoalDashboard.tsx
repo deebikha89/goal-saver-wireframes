@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Plus, Target, TrendingUp, Calendar, DollarSign } from "lucide-react";
+import { Plus, Target, TrendingUp, Calendar, Coins } from "lucide-react";
 
 interface GoalDashboardProps {
   onNavigate?: (screen: string) => void;
@@ -112,7 +112,7 @@ const GoalDashboard = ({ onNavigate }: GoalDashboardProps) => {
                   className="flex-1"
                   onClick={() => onNavigate?.('addmoney')}
                 >
-                  <DollarSign className="h-3 w-3 mr-1" />
+                  <Coins className="h-3 w-3 mr-1" />
                   Add Money
                 </Button>
                 <Button 

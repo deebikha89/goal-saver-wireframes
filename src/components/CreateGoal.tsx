@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Target, Calendar, DollarSign, Camera } from "lucide-react";
+import { ArrowLeft, Target, Calendar, Coins, Camera } from "lucide-react";
 import { useState } from "react";
 
 interface CreateGoalProps {
@@ -68,7 +68,7 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
             <div className="space-y-2">
               <Label htmlFor="targetAmount" className="text-sm font-medium">Target Amount</Label>
               <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sm font-semibold text-muted-foreground">KD</span>
                 <Input 
                   id="targetAmount" 
                   placeholder="5,000"
@@ -118,7 +118,7 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
         <Card className="p-4 space-y-4">
           <Label className="text-sm font-medium">Monthly Contribution (Optional)</Label>
           <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sm font-semibold text-muted-foreground">KD</span>
             <Input 
               placeholder="200"
               className="pl-9 border-input"
