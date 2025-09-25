@@ -11,7 +11,7 @@ import WithdrawMoney from "./WithdrawMoney";
 import MobileNotification from "./MobileNotification";
 import ReminderSettings from "./ReminderSettings";
 import { NotificationService } from "@/services/NotificationService";
-import { Toaster } from "@/components/ui/toaster";
+import { MobileToaster } from "./MobileToaster";
 
 interface Transaction {
   id: string;
@@ -76,6 +76,7 @@ const WireframeContainer = () => {
     setGoal(newGoal);
 
     // Show notification for credit
+    console.log('Triggering credit notification for:', parseFloat(amount.toString()));
     NotificationService.showTransactionNotification('credit', parseFloat(amount.toString()), newGoal.name);
   };
 
@@ -103,6 +104,7 @@ const WireframeContainer = () => {
     setGoal(newGoal);
 
     // Show notification for debit
+    console.log('Triggering debit notification for:', parseFloat(amount.toString()));
     NotificationService.showTransactionNotification('debit', parseFloat(amount.toString()), newGoal.name);
   };
 
@@ -183,8 +185,8 @@ const WireframeContainer = () => {
                       {renderCurrentComponent()}
                     </div>
                     {/* Toast container positioned within mobile frame */}
-                    <div className="absolute inset-0 pointer-events-none">
-                      <Toaster />
+                    <div className="absolute top-0 right-0 left-0 z-50 pointer-events-none">
+                      <MobileToaster />
                     </div>
                   </div>
               </div>

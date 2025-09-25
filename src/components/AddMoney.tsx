@@ -21,6 +21,7 @@ const AddMoney = ({ onNavigate, onAddTransaction }: AddMoneyProps) => {
       const selectedPaymentMethod = paymentMethods.find(m => m.id === selectedMethod);
       onAddTransaction(parseFloat(amount), selectedPaymentMethod?.name || "Unknown");
       
+      console.log('Triggering toast for amount:', amount);
       // Show success toast
       toast({
         title: "💰 Funds Added Successfully!",

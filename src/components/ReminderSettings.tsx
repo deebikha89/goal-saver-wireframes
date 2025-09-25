@@ -27,6 +27,8 @@ const ReminderSettings = ({ onNavigate, goal }: ReminderSettingsProps) => {
       const amount = parseFloat(customAmount);
       const goalName = goal?.name || "Emergency Fund";
 
+      console.log('Setting reminders with toast');
+      
       if (weeklyReminders) {
         await NotificationService.scheduleRecurringReminders(goalName, amount / 4, 'weekly');
       }
@@ -42,6 +44,7 @@ const ReminderSettings = ({ onNavigate, goal }: ReminderSettingsProps) => {
 
       onNavigate?.('details');
     } catch (error) {
+      console.error('Error setting reminders:', error);
       toast({
         title: "❌ Error",
         description: "Failed to set up reminders. Please try again.",
