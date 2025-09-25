@@ -2,8 +2,12 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Target, Calendar, Coins, Camera } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ArrowLeft, Target, Calendar as CalendarIcon, Coins, Camera } from "lucide-react";
 import { useState } from "react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface CreateGoalProps {
   onNavigate?: (screen: string) => void;
@@ -11,6 +15,7 @@ interface CreateGoalProps {
 
 const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [targetDate, setTargetDate] = useState<Date>();
 
   const categories = [
     { icon: "🏠", name: "Home", color: "bg-blue-100" },
@@ -79,14 +84,32 @@ const CreateGoal = ({ onNavigate }: CreateGoalProps) => {
 
             <div className="space-y-2">
               <Label htmlFor="deadline" className="text-sm font-medium">Target Date</Label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input 
-                  id="deadline" 
-                  type="date"
-                  className="pl-9 border-input"
-                />
-              </div>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal pl-9",
+                      !targetDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" />
+                    {targetDate ? format(targetDate, "MMM dd, yyyy") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0 z-50" align="center" side="bottom">
+                  <Calendar
+                    mode="single"
+                    selected={targetDate}
+                    onSelect={setTargetDate}
+                    disabled={(date) =>
+                      date < new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                    className={cn("p-3 pointer-events-auto")}
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
         </Card>
