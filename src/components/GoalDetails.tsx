@@ -31,13 +31,68 @@ const GoalDetails = ({ onNavigate, selectedGoalId }: GoalDetailsProps) => {
   const deadline = new Date(selectedGoal.deadline);
   const daysLeft = Math.max(0, differenceInDays(deadline, new Date()));
   
-  // Mock recent transactions for now - in a real app this would come from the database
-  const recentTransactions = [
-    { id: "1", date: "Sep 15", amount: selectedGoal.contributionAmount, type: "Monthly Auto-Save", icon: "🔄" },
-    { id: "2", date: "Sep 10", amount: 50, type: "Manual Add", icon: "➕", paymentMethod: "Current Account" },
-    { id: "3", date: "Aug 15", amount: selectedGoal.contributionAmount, type: "Monthly Auto-Save", icon: "🔄" },
-    { id: "4", date: "Aug 5", amount: 100, type: "Bonus Add", icon: "🎉", paymentMethod: "Current Account" },
-  ];
+  // Generate realistic transactions based on current progress
+  const generateRecentTransactions = () => {
+    if (selectedGoal.current === 0) {
+      return []; // No transactions if no progress
+    }
+
+    const transactions = [];
+    let remainingAmount = selectedGoal.current;
+    let transactionId = 1;
+    
+    // Calculate how many months since goal creation
+    const monthsSinceCreation = Math.floor(selectedGoal.current / selectedGoal.contributionAmount) || 1;
+    
+    // Generate monthly auto-save transactions
+    for (let i = monthsSinceCreation; i > 0 && remainingAmount > 0; i--) {
+      const date = new Date();
+      date.setMonth(date.getMonth() - i + 1);
+      const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      
+      const amount = Math.min(selectedGoal.contributionAmount, remainingAmount);
+      transactions.push({
+        id: transactionId.toString(),
+        date: formattedDate,
+        amount: amount,
+        type: "Monthly Auto-Save",
+        icon: "🔄"
+      });
+      remainingAmount -= amount;
+      transactionId++;
+    }
+    
+    // Add some manual contributions if there's still remaining amount
+    if (remainingAmount > 0) {
+      const manualAmounts = [];
+      while (remainingAmount > 0) {
+        const amount = Math.min(Math.floor(Math.random() * 200) + 50, remainingAmount);
+        manualAmounts.push(amount);
+        remainingAmount -= amount;
+      }
+      
+      manualAmounts.forEach((amount, index) => {
+        const date = new Date();
+        date.setDate(date.getDate() - (index * 7 + 3));
+        const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        
+        transactions.push({
+          id: transactionId.toString(),
+          date: formattedDate,
+          amount: amount,
+          type: "Manual Add",
+          icon: "➕",
+          paymentMethod: "Current Account"
+        });
+        transactionId++;
+      });
+    }
+    
+    // Sort by most recent first
+    return transactions.sort((a, b) => new Date(b.date + ", 2024").getTime() - new Date(a.date + ", 2024").getTime()).slice(0, 6);
+  };
+
+  const recentTransactions = generateRecentTransactions();
 
   return (
     <div className="max-w-sm mx-auto bg-gradient-to-b from-header to-background min-h-screen relative">
@@ -162,27 +217,37 @@ const GoalDetails = ({ onNavigate, selectedGoalId }: GoalDetailsProps) => {
       {/* Recent Activity */}
       <div className="px-4 relative z-10">
         <h3 className="font-semibold mb-3 text-foreground">Recent Activity</h3>
-        <div className="space-y-3">
-          {recentTransactions.slice(0, 6).map((transaction) => (
-            <Card key={transaction.id} className="p-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="text-lg">{transaction.icon}</div>
-                  <div>
-                    <div className="font-medium text-sm text-foreground">{transaction.type}</div>
-                    <div className="text-xs text-muted-foreground">
-                      {transaction.date}
-                      {transaction.paymentMethod && ` • ${transaction.paymentMethod}`}
+        {recentTransactions.length === 0 ? (
+          <Card className="p-6 text-center">
+            <div className="text-muted-foreground">
+              <div className="text-4xl mb-3">💰</div>
+              <p className="font-medium mb-1">No transactions yet</p>
+              <p className="text-sm">Start saving to see your progress here</p>
+            </div>
+          </Card>
+        ) : (
+          <div className="space-y-3">
+            {recentTransactions.map((transaction) => (
+              <Card key={transaction.id} className="p-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="text-lg">{transaction.icon}</div>
+                    <div>
+                      <div className="font-medium text-sm text-foreground">{transaction.type}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {transaction.date}
+                        {transaction.paymentMethod && ` • ${transaction.paymentMethod}`}
+                      </div>
                     </div>
                   </div>
+                  <div className={`font-semibold ${transaction.amount < 0 ? 'text-destructive' : 'text-success'}`}>
+                    {transaction.amount < 0 ? '' : '+'}KD {Math.abs(transaction.amount)}
+                  </div>
                 </div>
-                <div className={`font-semibold ${transaction.amount < 0 ? 'text-destructive' : 'text-success'}`}>
-                  {transaction.amount < 0 ? '' : '+'}KD {Math.abs(transaction.amount)}
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="h-6"></div>
